@@ -1,3 +1,11 @@
+---
+name: math-simple
+description: >-
+  Explain advanced math clearly with intuitive, step-by-step LaTeX explanations.
+  Use when the user asks about linear algebra, projections, Gram-Schmidt,
+  orthogonality, or other university-level math they want explained simply.
+---
+
 # Cursor Skill: Explain Advanced Math Clearly
 
 ````md
