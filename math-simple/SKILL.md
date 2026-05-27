@@ -24,6 +24,28 @@ Use:
 - Inline math: `$ ... $`
 - Block math:
 
+---
+
+## IMPORTANT: make LaTeX render correctly in Cursor
+ALWAYS use Markdown + LaTeX
+
+Use:
+
+```md
+$$
+\frac{u \cdot v}{\|v\|^2}
+$$
+````
+
+NOT:
+
+```md
+((u*v)/(||v||^2))
+```
+
+Cursor itself does NOT always render LaTeX in plain chat automatically like ChatGPT does.
+
+
 ```latex
 $$
 ...
@@ -196,31 +218,6 @@ Each step removes the parts already pointing in old directions.
 What remains is a brand new perpendicular direction."
 
 ````
-
----
-
-## IMPORTANT: make LaTeX render correctly in Cursor
-
-Cursor itself does NOT always render LaTeX in plain chat automatically like ChatGPT does.
-
-Best options:
-
-use Markdown + LaTeX
-Works in most markdown previews.
-
-Use:
-
-```md
-$$
-\frac{u \cdot v}{\|v\|^2}
-$$
-````
-
-NOT:
-
-```md
-((u*v)/(||v||^2))
-```
 
 ---
 
