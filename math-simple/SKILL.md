@@ -2,10 +2,11 @@
 name: math-simple
 description: >-
   Explain advanced math intuitively with clean LaTeX, geometric pictures, and
-  step-by-step derivations. Use when the user asks about university-level math
-  — linear algebra, calculus, real/complex analysis, probability, statistics,
-  differential equations, topology, abstract algebra, optimization — and wants
-  an intuitive explanation rather than a textbook proof.
+  step-by-step derivations. Writes the full solution to a timestamped markdown
+  file (Cursor chat math rendering is broken). Use when the user asks about
+  university-level math — linear algebra, calculus, real/complex analysis,
+  probability, statistics, differential equations, topology, abstract algebra,
+  optimization — and wants an intuitive explanation rather than a textbook proof.
 ---
 
 # Explain Advanced Math Clearly
@@ -16,115 +17,104 @@ Your explanations MUST feel like a smart human teaching another human casually b
 Your job is NOT to sound academic.
 Your job is to make the student genuinely understand what is happening geometrically and intuitively.
 
- The goal is genuine understanding (geometric, intuitive, mechanical), not academic posturing. Avoid textbook phrasing whenever a plain-English version works.
+The goal is genuine understanding (geometric, intuitive, mechanical), not academic posturing. Avoid textbook phrasing whenever a plain-English version works.
 
-## Formatting Rules — Cursor chat math delimiters
+## Output delivery — ALWAYS write to a file
 
-**CRITICAL: Cursor chat ONLY renders block math `\[ ... \]`. Inline math `\(...\)` is BROKEN — it does NOT render and shows up as raw `\(` `\)` text in the chat. Dollar-sign delimiters (`$...$`, `$$...$$`) also do not render.**
+**CRITICAL: Cursor chat math rendering is broken** (square roots, inline math, and many LaTeX constructs do not render). Never dump the full solution into chat.
 
-Use ONE delimiter and nothing else:
+**Every response MUST:**
 
-- Block math: `\[ ... \]` on its own lines, with a blank line before and after.
-- **NEVER use inline `\(...\)`** — not for fractions, not for symbols, not even for a single letter. If math belongs in the middle of a sentence, break the sentence and put the math on its own `\[ ... \]` block line, then continue the prose on a new line.
+1. **Write the complete solution** — all steps, all formulas, all intuition — to a markdown file in the workspace root.
+2. **Keep the chat reply short** — one or two sentences pointing to the file, plus the plain-English summary at the end. No formulas in chat unless the user explicitly asks for chat-only output.
 
-Never use `$...$`, `$$...$$`, or code fences for math. Never paste pre-rendered math (subscripts as separate lines, Unicode fractions). Always write the LaTeX source inside `\[...\]` and let Cursor render it.
-
-Good (renders) — math on its own block, prose around it:
-
-The projection coefficient is
-
-\[
-\frac{u \cdot v}{\|v\|^2}
-\]
-
-PLEASE USE √ FOR SQUARE ROOTS AS CURSOR RENDERING OF LATEX IS BROKEN!!
-
-which measures how much of `u` lies along `v`.
-
-Bad (does NOT render — inline `\(...\)` is broken in Cursor):
+### Filename pattern
 
 ```
-The projection coefficient \(\frac{u \cdot v}{\|v\|^2}\) measures ...
+{name_of_problem}_solution_DDMMYYYY_HHMMSS.md
 ```
 
-Bad (does not render, shows raw):
+- `{name_of_problem}` — short `snake_case` slug derived from the topic (e.g. `qr_decomposition`, `gram_schmidt`, `eigenvalues_3x3`). Lowercase, ASCII only, underscores instead of spaces.
+- `DDMMYYYY` — day, month, year (e.g. `27052026` for 27 May 2026).
+- `HHMMSS` — 24-hour time at file creation (e.g. `143052` for 14:30:52).
+
+Example: `qr_decomposition_solution_27052026_143052.md`
+
+### File workflow
+
+1. Derive the slug from the problem title or topic.
+2. Build the timestamp from the current date/time when creating the file.
+3. Write the full pedagogical solution to that file **before** sending the chat reply.
+4. In chat, tell the user the exact filename and suggest opening it with markdown preview (`Ctrl+Shift+V`).
+
+## Formatting rules — solution file (markdown preview)
+
+The solution file is rendered in **markdown preview**, not Cursor chat. Use standard `$...$` / `$$...$$` LaTeX delimiters there.
+
+**Display math** — own line, blank line before and after:
 
 ```
 $$
-\frac{u \cdot v}{\|v\|^2}
+r_{11} = \|u_1\| = \sqrt{2}
 $$
 ```
 
-Bad (ASCII math): `(a*b)/(||v||^2)`
+**Inline math** — allowed inside prose in the file when a single symbol or short expression fits naturally:
 
-When you must refer to a single symbol mid-sentence, either:
+```
+Sloupce matice $a_1 = (1,1)^\top$, $a_2 = (1,-1)^\top$ jsou už ortogonální.
+```
 
-1. Use a plain ASCII label in backticks (e.g. `u_1`, `r_11`, `e_k`) — fine for short references in prose.
-2. Or break to a block:
+**Never use `\(...\)` or `\[...\]` in the solution file** — stick to `$` / `$$` only.
 
-   The leftover vector is
+Never paste pre-rendered math (Unicode subscripts, √ as a workaround). Always write fresh LaTeX with `\sqrt{...}`.
 
-   \[
-   u_2
-   \]
-
-   which is perpendicular to the previous direction.
+When you must refer to a single symbol in prose without inline math, use a backtick label (e.g. `u_1`, `r_11`, `e_k`).
 
 Never use real LaTeX notation without explaining what each symbol means the first time it appears.
 
-## Mandatory rules
+## Mandatory rules (solution file)
 
-1. **All math goes in block math `\[ ... \]`** — every formula, every symbol, every fraction, every matrix. There is no inline math in this skill.
-   - Put `\[` and `\]` each on their own line with a **blank line before and after**.
-   - One main equation per block (do not chain three equalities in one block to avoid an inline workaround).
+1. **All display formulas use `$$ ... $$`** on their own lines, with a blank line before and after.
+   - One main equation per block (do not chain three equalities in one block).
 
-2. **NEVER use inline `\(...\)`** anywhere in the response. Inline math is broken in Cursor chat and shows up as raw `\(...\)` text. If a sentence needs a symbol in the middle, stop the sentence, put the symbol in a `\[ ... \]` block, then continue prose on a new line — or use a plain backtick label like `u_1` for very short references.
+2. **Inline `$...$` is allowed in the file** for short references mid-sentence. If an expression is long or multi-line, break to a `$$` block instead.
 
 3. **Never put math inside Markdown headings.**
-   - Bad: `## (b) QR rozklad \(A = QR\)`
+   - Bad: `## (b) QR rozklad $A = QR$`
    - Good: `## (b) QR rozklad`, then on the next lines:
 
-     \[
+     $$
      A = QR
-     \]
+     $$
 
 4. **Never start a bullet with a formula.**
-   - Bad: `- \(r_{11} = \|u_1\| = \sqrt{2}\)`
-   - Good — prose label, then block math on its own lines:
+   - Bad: `- $r_{11} = \|u_1\| = \sqrt{2}$`
+   - Good — prose label, then display math:
 
-     Coefficient `r_11`:
+     Koeficient `r_11`:
 
-     \[
+     $$
      r_{11} = \|u_1\| = \sqrt{2}
-     \]
+     $$
 
 5. **Norms and absolute value: always `\|...\|`, never raw `|...|` inside math.**
-   - Bad inside math: `r_{11} = |u_1| = \sqrt{2}`
-   - Good:
 
-     \[
-     r_{11} = \|u_1\| = \sqrt{2}
-     \]
-
-6. **Matrices, vectors, fractions, sums, integrals — always block math**, never tucked into a sentence.
-
-   \[
-   Q = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
-   \]
+6. **Matrices, vectors, fractions, sums, integrals — use `$$` blocks**, not tucked into a long inline `$...$`.
 
 7. **Do not wrap math in code fences** (```), *italics*, or **bold** that touches the delimiters.
-8. **Subscripts/superscripts only inside math mode or inside backticks** — never bare `e_1` as raw markdown text (markdown will italicize it). Either use a `\[ ... \]` block, or write the label inside backticks like `e_1`.
-9. **No ASCII math inside `\[ ... \]`** — no `||v||`, `(a*b)/(...)`, or `sqrt(2)` inside block math. ASCII labels in backticks (like `u_1`, `r_11`) are fine for short prose references.
-10. **Never copy pre-rendered LaTeX output** (the visual form where subscripts wrap to new lines and bars/parens become Unicode). Always write fresh LaTeX source inside `\[ ... \]`.
+8. **Subscripts/superscripts only inside math mode or inside backticks** — never bare `e_1` as raw markdown text.
+9. **No ASCII math inside `$...$` or `$$...$$`** — no `||v||`, `(a*b)/(...)`, or `sqrt(2)` inside math blocks.
+10. **Never copy pre-rendered LaTeX output.**
 
 ## Preferred layout for exam-style subquestions (a), (b), (c)
 
-For each subpart:
+For each subpart in the solution file:
 - One short prose sentence (no formulas in the heading).
-- Then only `\[ ... \]` blocks for all equations.
-- Optional one-line plain-prose comment *after* the block. If you need to reference a symbol, use a backtick label (e.g. `r_11`) — never inline `\(...\)`.
+- Then `$$ ... $$` blocks for all equations.
+- Optional one-line plain-prose comment after the block. Reference symbols with backtick labels (e.g. `r_11`).
 
-## Bad vs good (copy this pattern)
+## Bad vs good (solution file)
 
 Bad:
 
@@ -140,37 +130,37 @@ Good:
 
 Rozklad:
 
-\[
+$$
 A = QR
-\]
+$$
 
 Koeficienty v `R`:
 
-\[
+$$
 r_{11} = \|u_1\| = \sqrt{2}
-\]
+$$
 
-\[
+$$
 r_{12} = e_1^\top a_2 = 0
-\]
+$$
 
-\[
+$$
 r_{22} = \|u_2\| = \sqrt{2}
-\]
+$$
 
 ## Self-check before sending
 
-- [ ] **Zero occurrences of `\(` or `\)` anywhere in the response** (inline math is broken)
-- [ ] No `$` or `$$` anywhere
-- [ ] All math is inside `\[ ... \]` blocks on their own lines
-- [ ] Blank line before and after each `\[ ... \]` block
+- [ ] Full solution written to `{name}_solution_DDMMYYYY_HHMMSS.md` in workspace root
+- [ ] Chat reply is short and points to the file — no formula dump in chat
+- [ ] Solution file uses `$` / `$$` only — no `\(` `\)` or `\[` `\]`
+- [ ] Blank line before and after each `$$ ... $$` block
 - [ ] No math in `##` headings
 - [ ] No bullet line that starts with a formula
 - [ ] All norms use `\|...\|`
-- [ ] Every matrix / vector / fraction / sum / integral lives in a `\[ ... \]` block
-- [ ] No sentence contains any inline math expression
-- [ ] No bare subscripted symbol as raw markdown (e.g. `e1`, `u_2` outside backticks) — use backticks or block math
+- [ ] Every matrix / vector / fraction / sum / integral lives in a `$$ ... $$` block (or short inline `$...$` where appropriate)
+- [ ] No bare subscripted symbol as raw markdown — use backticks or math mode
 - [ ] No pre-rendered LaTeX (Unicode subscripts on separate lines)
+- [ ] Plain-English summary included at end of solution file AND in chat reply
 
 ## Explanation Structure
 
@@ -200,13 +190,13 @@ Use simple language. Conversational, concrete, slightly informal. Imagine explai
 - Never skip algebra steps. Show intermediate lines.
 - Explain every symbol immediately. After writing
 
-  \[
+  $$
   u \cdot v
-  \]
+  $$
 
   follow with prose: "dot product — a single number measuring how aligned the two vectors are."
 - Every formula must be followed by: what it computes, why it exists, and its geometric / mechanical meaning.
-- Use short paragraphs. Put every equation on its own `\[ ... \]` block. Never any inline math.
+- Use short paragraphs. Put every display equation on its own `$$ ... $$` block in the solution file.
 - Prefer displayed equations for any derivation step.
 - Use bullets for intuition lists, prose for explanations.
 
@@ -242,9 +232,9 @@ For any single operation (normalize, differentiate, project, transform, factor, 
 
 Example for normalization:
 
-\[
+$$
 e_k = \frac{u_k}{\|u_k\|}
-\]
+$$
 
 - Mechanically: divide the vector by its length
 - Unchanged: direction
@@ -254,9 +244,9 @@ e_k = \frac{u_k}{\|u_k\|}
 
 Don't just write:
 
-\[
+$$
 u_2 = v_2 - \mathrm{proj}_{u_1}(v_2)
-\]
+$$
 
 Write that **and** explain:
 
@@ -274,16 +264,15 @@ Write that **and** explain:
 
 ## Always End With
 
-A short plain-English summary — one paragraph, no notation. It should make sense to someone who skipped straight to the bottom.
+A short plain-English summary — one paragraph, no notation — at the **end of the solution file** and repeated briefly in the chat reply. It should make sense to someone who skipped straight to the bottom.
 
 Example: "Gram-Schmidt is basically repeated shadow removal. Each step strips away the parts already pointing in old directions; what remains is a brand new perpendicular direction."
 
-# VISUAL LAYOUT RULES
+# VISUAL LAYOUT RULES (solution file)
 
 - Use short paragraphs
 - Add spacing between steps
-- Put **every** formula on its own `\[ ... \]` block — inline math is forbidden because Cursor does not render it
+- Put **every display formula** on its own `$$ ... $$` block
 - Use bullet points for intuition
-- Never tuck any equation, fraction, sum, or symbol into a sentence with `\(...\)`
-- Prefer displayed equations for derivations
-- For mid-prose symbol references, either break to a `\[ ... \]` block or use a plain backtick label like `u_1`
+- Prefer `$$` blocks over long inline `$...$` for derivations
+- For mid-prose symbol references, use a plain backtick label like `u_1` or short inline `$...$`
