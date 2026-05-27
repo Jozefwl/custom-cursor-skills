@@ -90,9 +90,7 @@ Goal: every formula must be visible in Cursor chat. When in doubt, use **display
    Q = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
    $$
 
-6. **At most one inline `$...$` per sentence** for short symbols ($A$, $Q$, $n$).
-   - Bad: `Sloupce $Q$ jsou $e_1$ a $e_2$.`
-   - Good: `Sloupce matice Q jsou e1 a e2.` then show $Q$, $e_1$, $e_2$ in separate `$$` blocks.
+6. **DO NOT PUT inline math.** DONT USE Use inline $...$ for short symbol references in prose (e.g. „projection of $a_2$ onto $e_1$"). NEVER inline expressions, fractions, norms, sums, or matrices — those go in $$ ... $$. Separate them, If a sentence needs more than inline symbols, wrte the sentence, write the math, continue at another line with the sentence etc..
 
 7. **Do not wrap math in code fences** (```), *italics*, or **bold** that touches `$`.
 8. **Subscripts/superscripts only inside math mode** — never bare `e_1` in plain text.
@@ -140,6 +138,8 @@ $$
 - [ ] All norms use `\| \|
 - [ ] Every matrix/vector in `$$`
 - [ ] Blank line before and after each `$$` block
+- [ ] No sentence contains inline $...$
+- [ ] No bare subscripted symbol in plain text (e.g. `e1`, `u_2`)
 
 ## Explanation Structure
 
