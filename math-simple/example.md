@@ -1,4 +1,27 @@
-projection is basically trying to two vectors, a component from vector \(u\) which is parallel to vector \(v\) and another component of vector \(u\) which is \(90^\circ\) (perpendicular) to vector \(v\), so we get two components of \(u\), first one is parallel to projected vector and another one is perpendicular (\(90^\circ\)) to vector \(v\)
+projection is basically splitting vector \(u\) into two components:
+
+a component from vector \(u\) which is parallel to vector \(v\)
+
+and
+
+a component from vector \(u\) which is
+
+$$
+90^\circ
+$$
+
+(perpendicular) to vector \(v\)
+
+so we get two components of \(u\):
+
+- first one is parallel to projected vector
+- another one is perpendicular
+
+$$
+(90^\circ)
+$$
+
+to vector \(v\)
 
 how to find them?
 
