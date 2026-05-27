@@ -51,6 +51,95 @@ $$
 
 Do NOT overuse notation without explanation.
 
+## Cursor chat — LaTeX that actually renders
+
+Goal: every formula must be visible in Cursor chat. When in doubt, use **display math** (`$$`), not bullets with inline `$`.
+
+### Mandatory rules
+
+1. **Display math for anything important** (definitions, QR pieces, whole matrices, multi-step algebra):
+   - Put `$$` on its own lines with a **blank line before and after**.
+   - One main equation per `$$` block (do not chain three equalities in one inline `$...$`).
+
+2. **Never put `$...$` inside Markdown headings.**
+   - Bad: `## (b) QR rozklad $A = QR$`
+   - Good: `## (b) QR rozklad` then on the next lines:
+     $$
+     A = QR
+     $$
+
+3. **Never start a bullet with a formula.**
+   - Bad:
+     - $r_{11} = \|u_1\| = \sqrt{2}$
+   - Good — prose label, then display math:
+     Koeficient $r_{11}$:
+     $$
+     r_{11} = \|u_1\| = \sqrt{2}
+     $$
+   - Or use numbered steps **without** leading `$` on the same line as `-` / `1.`.
+
+4. **Norms and absolute value: always `\|...\|`, never raw `|...|` inside math.**
+   - Bad: `$r_{11} = |u_1| = \sqrt{2}$`
+   - Good:
+     $$
+     r_{11} = \|u_1\| = \sqrt{2}
+     $$
+
+5. **Matrices and vectors: always display math**, never inline in a sentence.
+   $$
+   Q = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
+   $$
+
+6. **At most one inline `$...$` per sentence** for short symbols ($A$, $Q$, $n$).
+   - Bad: `Sloupce $Q$ jsou $e_1$ a $e_2$.`
+   - Good: `Sloupce matice Q jsou e1 a e2.` then show $Q$, $e_1$, $e_2$ in separate `$$` blocks.
+
+7. **Do not wrap math in code fences** (```), *italics*, or **bold** that touches `$`.
+8. **Subscripts/superscripts only inside math mode** — never bare `e_1` in plain text.
+9. **No ASCII math** — no `||v||`, `(a*b)/(...)`, or `sqrt(2)` outside LaTeX.
+
+### Preferred layout for exam-style subquestions (a), (b), (c)
+
+For each subpart:
+- One short prose sentence (no formulas in the heading).
+- Then only `$$ ... $$` blocks for all equations.
+- Optional one-line comment *after* the block, still with at most one `$...$` if needed.
+
+### Bad vs good (copy this pattern)
+
+Bad:
+## (b) $A=QR$
+- $r_{11}=|u_1|=\sqrt{2}$
+- $r_{12}=0$
+
+Good:
+## (b) QR rozklad
+
+Rozklad:
+$$
+A = QR
+$$
+
+Koeficienty v R:
+$$
+r_{11} = \|u_1\| = \sqrt{2}
+$$
+
+$$
+r_{12} = e_1^\top a_2 = 0
+$$
+
+$$
+r_{22} = \|u_2\| = \sqrt{2}
+$$
+
+### Self-check before sending
+
+- [ ] No `$` inside `##` headings
+- [ ] No bullet line of the form `- $...$`
+- [ ] All norms use `\| \|
+- [ ] Every matrix/vector in `$$`
+- [ ] Blank line before and after each `$$` block
 
 ## Explanation Structure
 
