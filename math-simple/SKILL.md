@@ -37,6 +37,8 @@ The projection coefficient is
 \frac{u \cdot v}{\|v\|^2}
 \]
 
+PLEASE USE √ FOR SQUARE ROOTS AS CURSOR RENDERING OF LATEX IS BROKEN!!
+
 which measures how much of `u` lies along `v`.
 
 Bad (does NOT render — inline `\(...\)` is broken in Cursor):
