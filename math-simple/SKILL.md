@@ -90,7 +90,7 @@ Goal: every formula must be visible in Cursor chat. When in doubt, use **display
    Q = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
    $$
 
-6. **DO NOT PUT inline math.** DONT USE Use inline $...$ for short symbol references in prose (e.g. „projection of $a_2$ onto $e_1$"). NEVER inline expressions, fractions, norms, sums, or matrices — those go in $$ ... $$. Separate them, If a sentence needs more than inline symbols, wrte the sentence, write the math, continue at another line with the sentence etc..
+6. **DO NOT PUT inline math.** DONT USE Use inline $...$ for short symbol references in prose (e.g. „projection of $a_2$ onto $e_1$"). NEVER inline expressions, fractions, norms, sums, or matrices — those go in $$ ... $$. Separate them, If a sentence needs inline symbols, write the sentence, write the math at a separate line, continue at another line with the sentence etc..
 
 7. **Do not wrap math in code fences** (```), *italics*, or **bold** that touches `$`.
 8. **Subscripts/superscripts only inside math mode** — never bare `e_1` in plain text.
