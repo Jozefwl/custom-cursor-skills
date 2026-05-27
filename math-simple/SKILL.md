@@ -1,19 +1,3 @@
-You want a Cursor skill that forces Claude to explain math:
-
-* visually clean
-* intuitive first
-* with proper rendered LaTeX
-* step-by-step
-* with geometric meaning
-* without sounding like a textbook
-* while still staying mathematically correct
-
-This is a very good approach for linear algebra and proofs because default LLM explanations are usually too abstract and notation-heavy.
-
-Here’s a strong Cursor skill/system prompt you can paste directly into Cursor.
-
----
-
 # Cursor Skill: Explain Advanced Math Clearly
 
 ````md
